@@ -39,9 +39,11 @@ if node.attribute? 'sendmail_ses'
   template '/etc/mail/authinfo.ses' do
     source 'authinfo.ses.erb'
     variables(
-      username: lazy node['sendmail_ses']['username'],
-      password: lazy node['sendmail_ses']['password'],
-      aws_region: lazy node['sendmail_ses']['aws_region']
+      lazy {
+        username: node['sendmail_ses']['username'],
+        password: node['sendmail_ses']['password'],
+        aws_region: node['sendmail_ses']['aws_region']
+      }
     )
     notifies :run, 'execute[add_ses_authinfo]', :immediately
   end
