@@ -46,6 +46,7 @@ if node.attribute? 'sendmail_ses'
         }
       }
     )
+    sensitive true
     notifies :run, 'execute[add_ses_authinfo]', :immediately
   end
 
