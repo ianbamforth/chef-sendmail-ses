@@ -40,9 +40,10 @@ if node.attribute? 'sendmail_ses'
     source 'authinfo.ses.erb'
     variables(
       lazy {
-        username: node['sendmail_ses']['username'],
-        password: node['sendmail_ses']['password'],
-        aws_region: node['sendmail_ses']['aws_region']
+        { :username => node['sendmail_ses']['username'],
+          :password => node['sendmail_ses']['password'],
+          :aws_region => node['sendmail_ses']['aws_region']
+        }
       }
     )
     notifies :run, 'execute[add_ses_authinfo]', :immediately
