@@ -114,7 +114,7 @@ CMD
   if node['platform'] == 'ubuntu' && node['platform_version'].to_f > 14.04
     provider=Chef::Provider::Service::Systemd
   else
-    provider=Chef::Provider::Service::Upstart
+    provider=Chef::Provider::Service::Invokercd
   end
 
   service 'ses_sendmail' do
