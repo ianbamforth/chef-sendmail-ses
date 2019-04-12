@@ -111,11 +111,16 @@ CMD
     notifies :restart, 'service[ses_sendmail]', :immediately
   end
 
+  if node['platform'] == 'ubuntu' && node['platform_version'].to_f > 14.04
+    provider=Chef::Provider::Service::Systemd
+  else
+    provider=Chef::Provider::Service::Upstart
+  end
+
   service 'ses_sendmail' do
     service_name 'sendmail'
-    if node['platform'] == 'ubuntu' && node['platform_version'].to_f > 14.04
-      provider=Chef::Provider::Service::Systemd
-    end
+    provider provider
+    action [:enable]
     notifies :run, 'execute[sendmail_test]', :immediately
   end
 
